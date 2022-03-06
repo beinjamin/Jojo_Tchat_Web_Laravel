@@ -17,6 +17,7 @@ class TweetFactory extends Factory
     public function definition()
     {
         return [
+            'content' => $this->faker->text
             //
         ];
     }
