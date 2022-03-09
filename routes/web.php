@@ -1,8 +1,10 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TweetController;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,7 +26,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('tweets', [TweetController::class, ' index'])->name('tweets.index');
+//Route::get('tweets', [TweetController::class, ' index'])->name('tweets.index');
+Route::get('/', [App\Http\Controllers\TweetController::class, 'index'])->name('tweets.index');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
