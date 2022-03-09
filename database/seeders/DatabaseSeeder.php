@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(10)->create()->each(
-            fn ($user) => $user->tweets()->saveMany(\App\Models\Tweet::factory(5)->create())
+        \App\Models\User::factory(15)->create()->each(
+            fn ($user) => $user->tweets()->saveMany(\App\Models\Tweet::factory(5)->make())
         );
     }
 }

@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('tweets', function (Blueprint $table) {
             $table->id();
             $table->text('content');
-            $table->foreignId('user_id')->constrained();
+
+            $table->foreignId("user_id")->constrained();
             $table->timestamps();
         });
     }
