@@ -9,7 +9,7 @@ class TweetController extends Controller
 {
     public function index()
     {
-        $tweets = Tweet::with('user');
+        $tweets = Tweet::with('user')->get();
         dd($tweets);
     }
 }

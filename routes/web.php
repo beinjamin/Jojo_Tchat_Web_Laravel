@@ -27,7 +27,7 @@ Route::get('/', function () {
 });
 
 //Route::get('tweets', [TweetController::class, ' index'])->name('tweets.index');
-Route::get('/', [App\Http\Controllers\TweetController::class, 'index'])->name('tweets.index');
+Route::get('/tweets', [App\Http\Controllers\TweetController::class, 'index'])->name('tweets.index');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
