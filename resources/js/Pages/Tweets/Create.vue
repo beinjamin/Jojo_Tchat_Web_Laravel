@@ -1,47 +1,64 @@
 <template>
-    <app-layout title="Profile">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Les Derniers Tweets
-            </h2>
-        </template>
-{{ tweets }}
-{{ tweet }}
-       <div class="py-12">
-            <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-                <div v-for="tweet in tweets" v-bind:key="tweet.id" class="flex items-center space-x-4 bg-white overflow-hidden rounded rounded-b-none border-b-2 border-gray-200 py-6 px-4">
-                    <img class="h-16 w-16 object-cover rounded-full" :src="tweet.user.profile_photo_url">
-                    <div class="flex flex-col w-2/3">
-                    <div>
-                        <a class="text-sm text-gray-900 font-bold hover:text-blue-400" :href="`/profile/${tweet.user.name}`">
-                            {{ tweet.user.name }}
-                        </a>
-                        <span class="font-thin text-gray-400">· le {{ tweet.created_at }}</span>
-                    </div>
-                    <div class="text-sm text-gray-400 font-thin">{{ tweet.content }}</div>
-                    </div>
-                   <div v-if="tweet.user.id !== $page.user.id" class="w-40">
-                    <inertia-link v-if="!tweet.user.isFollowing" as="button" :href="`/follows/${tweet.user.id}`" method="POST" class="bg-white text-blue-500 cursor-pointer px-5 py-2 hover:text-white border border-blue-500 leading-tight hover:bg-blue-500 rounded-full font-extrabold transition-all duration-300" preserve-scroll>Suivre</inertia-link>
-                    <inertia-link v-else as="button" :href="`/unfollows/${tweet.user.id}`" method="POST" class="bg-white text-blue-500 cursor-pointer px-5 py-2 flex-shrink-0 hover:text-white border border-blue-500 leading-tight hover:bg-blue-500 rounded-full font-extrabold transition-all duration-300" preserve-scroll>Ne Plus Suivre</inertia-link>
-                    </div>
+    <div class="py-6">
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <form @submit.prevent="postTweet">
+                <textarea ref="tweetTextarea" @input="resizeTweetTextarea" placeholder="Que se passe-t-il ?" class="rounded-lg border border-gray-200 w-full p-2 font-semibold resize-none focus:outline-none" v-model="content"></textarea>
+                <span class="my-5 text-red-500" v-if="$page.errors.content">
+                    {{ $page.errors.content }}
+                </span>
+                <div class="flex items-center space-x-4 justify-end mt-3">
+                    <p class="text-sm text-gray-400 font-thin" :class="{ 'text-red-500' : calculateRemainingChar < 0 }">{{ calculateRemainingChar }} caractères restants</p>
+                    <button-vue :disabled="!canSubmit" class="bg-blue-500 hover:bg-blue-800 rounded-full font-extrabold">Tweet</button-vue>
                 </div>
-            </div>
+            </form>
         </div>
-    </app-layout>
+    </div>
 </template>
 
 <script>
-    import { defineComponent } from 'vue'
+    import Button from '../../Jetstream/Button.vue'
 
-    export default defineComponent({
-        props: ['sessions'],
+    export default {
+    components: { ButtonVue: Button },
 
-        components: {
-            AppLayout,
+    data() {
+        return {
+            'content': '',
+            'maxChar': 280
+        }
+    },
 
+    methods: {
+        postTweet() {
+            this.$inertia.post('/tweets',
+                { 'content' : this.content },
+                { preserveState: false }
+            )
         },
-        props: {
-            tweets: Array
+
+        resizeTweetTextarea() {
+            let textarea = this.$refs['tweetTextarea']
+            textarea.style.height = 'initial'
+            textarea.style.height = `${textarea.scrollHeight}px`
+        }
+    },
+
+    computed: {
+        calculateRemainingChar() {
+            return this.maxChar - this.content.length
         },
-    })
+
+        canSubmit() {
+            return this.content.length && this.calculateRemainingChar >= 0
+        }
+    }
+
+    }
 </script>
+
+<style scoped>
+    button:disabled {
+        opacity: 50%;
+        cursor: not-allowed;
+    }
+</style>
