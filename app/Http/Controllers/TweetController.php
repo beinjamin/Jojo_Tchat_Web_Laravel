@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-
+use Inertia\Inertia;
 use App\Models\Tweet;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class TweetController extends Controller
 {
     public function index()
     {
         $tweets = Tweet::with('user')->get();
+        //dd($tweets);
         return Inertia::render('Tweets/Index', [
             'tweets' => $tweets
         ]);

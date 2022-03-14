@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tweet extends Model
 {
@@ -19,5 +20,9 @@ class Tweet extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function getCreatedAttribute($date)
+    {
+        return Carbon::parse($date)->format('Y-m-d H:i:s');
     }
 }

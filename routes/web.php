@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\TweetController;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
