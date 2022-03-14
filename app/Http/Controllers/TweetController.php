@@ -11,7 +11,7 @@ class TweetController extends Controller
     public function index()
     {
         $tweets = Tweet::with('user')->get();
-        return Inertia::render('Pages/Tweets/index.vue', [
+        return Inertia::render('Tweets/Index', [
             'tweets' => $tweets
         ]);
     }
