@@ -11,7 +11,7 @@ class TweetController extends Controller
     public function index()
     {
         $tweets = Tweet::with('user')->get();
-        return Inertia::render('Tweets/Index', [
+        return Inertia::render('Tweets/index', [
             'tweets' => $tweets
         ]);
     }
