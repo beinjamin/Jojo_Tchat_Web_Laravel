@@ -6,6 +6,12 @@
             </h2>
         </template>
 
+
+
+
+<tweet-create></tweet-create>
+
+
    <div class="py-12">
             <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
                 <div v-for="tweet in tweets" v-bind:key="tweet.id" class="flex items-center space-x-4 bg-white overflow-hidden rounded rounded-b-none border-b-2 border-gray-200 py-6 px-4">
@@ -35,11 +41,12 @@
 
 <script>
      import AppLayout from '@/Layouts/AppLayout'
-
+     import TweetCreate  from '@/Pages/Tweets/Create'
 
     export default {
         components: {
             AppLayout,
+            TweetCreate,
 
         },
 
