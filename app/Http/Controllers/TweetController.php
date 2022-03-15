@@ -16,4 +16,8 @@ class TweetController extends Controller
             'tweets' => $tweets
         ]);
     }
+
+    public function store(Request $request)
+    {
+    }
 }
