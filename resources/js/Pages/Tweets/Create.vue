@@ -9,7 +9,7 @@
 
                 </span>
                 <div class="flex items-center space-x-4 justify-end mt-3">
-                    <p class="text-sm text-gray-400 font-thin" > caractères restants</p>
+                    <p class="text-sm text-gray-400 font-thin" > 280 restants</p>
                     <button-vue  class="bg-blue-500 hover:bg-blue-800 rounded-full font-extrabold">Tweet</button-vue>
                 </div>
             </form>
@@ -18,9 +18,13 @@
 </template>
 
 <script>
+    import ButtonVue from '@/Jetstream/Button'
     export default {
 
+        components: {
+            ButtonVue
 
+        }
         }
 
 
