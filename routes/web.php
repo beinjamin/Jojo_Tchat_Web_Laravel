@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Application;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

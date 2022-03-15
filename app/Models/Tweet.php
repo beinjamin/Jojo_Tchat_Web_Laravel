@@ -21,8 +21,4 @@ class Tweet extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function getCreatedAttribute($date)
-    {
-        return Carbon::parse($date)->format('Y-m-d H:i:s');
-    }
 }
