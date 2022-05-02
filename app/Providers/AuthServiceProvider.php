@@ -10,7 +10,7 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * The policy mappings for the application.
      *
-     * @var array<class-string, class-string>
+     * @var array
      */
     protected $policies = [
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
@@ -25,6 +25,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('follows', fn ($user, $tweetId) => $user->id === $tweetId);
     }
 }

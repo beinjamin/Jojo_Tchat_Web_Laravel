@@ -2,23 +2,27 @@
 
 namespace Database\Factories;
 
+use App\Models\Tweet;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Tweet>
- */
 class TweetFactory extends Factory
 {
     /**
+     * The name of the factory's corresponding model.
+     *
+     * @var string
+     */
+    protected $model = Tweet::class;
+
+    /**
      * Define the model's default state.
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function definition()
     {
         return [
-            'content' => $this->faker->text
-            //
+            'content' => $this->faker->sentence,
         ];
     }
 }

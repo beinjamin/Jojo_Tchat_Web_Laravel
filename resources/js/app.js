@@ -1,20 +1,28 @@
 require('./bootstrap');
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
-import { InertiaProgress } from '@inertiajs/progress';
+require('moment');
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+import Vue from 'vue';
 
-createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => require(`./Pages/${name}.vue`),
-    setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
-            .use(plugin)
-            .mixin({ methods: { route } })
-            .mount(el);
-    },
-});
+import { InertiaApp } from '@inertiajs/inertia-vue';
+import { InertiaForm } from 'laravel-jetstream';
+import PortalVue from 'portal-vue';
 
-InertiaProgress.init({ color: '#4B5563' });
+Vue.mixin({ methods: { route } });
+Vue.use(InertiaApp);
+Vue.use(InertiaForm);
+Vue.use(PortalVue);
+
+const app = document.getElementById('app');
+
+new Vue({
+    render: (h) =>
+        h(InertiaApp, {
+            props: {
+                initialPage: JSON.parse(app.dataset.page),
+                resolveComponent: (name) => require(`./Pages/${name}`).default,
+            },
+        }),
+}).$mount(app);
+
+// Vue.prototype.$route = (...args) => route(...args).url()

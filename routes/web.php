@@ -1,10 +1,7 @@
 <?php
 
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Application;
-
-
+use App\Http\Controllers\TweetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,26 +15,19 @@ use Illuminate\Foundation\Application;
 */
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return view('welcome');
 });
-
-//Route::get('tweets', [TweetController::class, ' index'])->name('tweets.index');
-Route::get('tweets', [App\Http\Controllers\TweetController::class, 'index'])->name('tweets.index');
-
-
-
 
 
 Route::group(['middleware' => ['auth:sanctum', 'verified']], function () {
+    Route::get('/dashboard', fn () => Inertia\Inertia::render('Dashboard'))->name('dashboard');
 
-    Route::get('/dashboard', function () {
+    Route::get('/tweets', [TweetController::class, 'index'])->name('tweets.index');
+    Route::post('/tweets', [TweetController::class, 'store'])->name('tweets.store');
 
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-    Route::post('tweets', [App\Http\Controllers\TweetController::class, 'store'])->name('tweets.store');
+    Route::get('/profile/{user:name}', [TweetController::class, 'profile'])->name('tweets.profile');
+
+    Route::get('/followings', [TweetController::class, 'followings'])->name('tweets.followings');
+    Route::post('/unfollows/{user:id}', [TweetController::class, 'unfollows'])->name('tweets.followings.store');
+    Route::post('/follows/{user:id}', [TweetController::class, 'follows'])->name('tweets.followings.store');
 });
